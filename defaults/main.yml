@@ -1,0 +1,20 @@
+fqdn: "{{ inventory_hostname }}"
+basicPackages:
+ - curl
+ - dnsutils
+ - git
+ - gnupg2
+ - locales 
+ - nmap
+ - netcat-openbsd
+ - net-tools
+ - openssl
+ - screen
+ - sudo
+ - swaks
+ - sysstat
+ - telnet
+ - tmux
+ - neovim
+ - tcpdump
+

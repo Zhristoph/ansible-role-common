@@ -1,0 +1,65 @@
+---
+- name: Set hostname based on inventory hostname
+  tags: hostname
+  hostname: name="{{ inventory_hostname }}"
+
+- name: Set /etc/hostname
+  tags: hostname
+  template: src=hostname.j2 dest=/etc/hostname
+
+- name: Set /etc/hosts
+  tags: hostname
+  template: src=hosts.j2 dest=/etc/hosts
+
+- name: Update apt cache
+  tags: apt
+  apt:
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
+    upgrade: dist
+    cache_valid_time: 8000
+
+- name: Add Ubuntu packages to list
+  tags: apt
+  set_fact:
+    ubuntuPackages:
+     - telnet-ssl
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Collect all packages
+  tags: apt
+  set_fact:
+    commonPackages: "{{ basicPackages + ( ubuntuPackages | default([])) }}"
+
+- name: Install basic tools
+  tags: apt
+  apt:
+    name: "{{ commonPackages }}"
+
+- name: Create some locales
+  locale_gen:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - en_US.UTF-8
+    - de_DE.UTF-8
+
+- name: Create directories
+  file:
+    dest: "{{ item }}"
+    state: directory
+  loop:
+   - /data
+   - /root/bin
+
+- name: Deploy scripts for root
+  template:
+    src: "{{ item }}"
+    dest: "/root/bin/{{ item }}"
+    mode: 0700
+    owner: root
+    group: root
+  loop:
+   - upgrade.sh
+
