@@ -63,10 +63,10 @@
   loop:
    - upgrade.sh
 
-- name: Deploy Diffi-Hellman Parameter files
-  file:
+- name: Deploy Diffi-Hellman Parameter files from https://ssl-config.mozilla.org/ffdhe(2048|4096).txt
+  copy:
     src: "{{ item }}.txt"
-    dest: "{{ /etc/ssl/{{ item }}.pem"
+    dest: "/etc/ssl/{{ item }}.pem"
     mode: 0444
     owner: root
     group: root
