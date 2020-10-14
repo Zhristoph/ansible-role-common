@@ -63,3 +63,13 @@
   loop:
    - upgrade.sh
 
+- name: Deploy Diffi-Hellman Parameter files
+  file:
+    src: "{{ item }}.txt"
+    dest: "{{ /etc/ssl/{{ item }}.pem"
+    mode: 0444
+    owner: root
+    group: root
+  loop:
+   - ffdhe2048
+   - ffdhe4096
