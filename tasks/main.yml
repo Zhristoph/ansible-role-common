@@ -8,14 +8,14 @@
   template:
     src: hostname.j2
     dest: /etc/hostname
-    mode: "u=rw,g=r,u=r"
+    mode: "u=rw,g=r,o=r"
 
 - name: Set /etc/hosts
   tags: hostname
   template:
     src: hosts.j2
     dest: /etc/hosts
-    mode: "u=rw,g=r,u=r"
+    mode: "u=rw,g=r,o=r"
 
 - name: Update apt cache
   tags: apt
