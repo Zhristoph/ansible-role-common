@@ -5,11 +5,17 @@
 
 - name: Set /etc/hostname
   tags: hostname
-  template: src=hostname.j2 dest=/etc/hostname
+  template:
+    src: hostname.j2
+    dest: /etc/hostname
+    mode: "u=rw,g=r,u=r"
 
 - name: Set /etc/hosts
   tags: hostname
-  template: src=hosts.j2 dest=/etc/hosts
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+    mode: "u=rw,g=r,u=r"
 
 - name: Update apt cache
   tags: apt
@@ -49,6 +55,7 @@
   file:
     dest: "{{ item }}"
     state: directory
+    mode: "u=rwx,g=rx,u=rx"
   loop:
    - /data
    - /root/bin
