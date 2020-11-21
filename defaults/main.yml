@@ -18,3 +18,5 @@ basicPackages:
  - neovim
  - tcpdump
 
+ubuntuPackages:
+ - telnet-ssl

@@ -26,17 +26,16 @@
     upgrade: dist
     cache_valid_time: 8000
 
-- name: Add Ubuntu packages to list
+- name: Set common packages to basic
   tags: apt
   set_fact:
-    ubuntuPackages:
-     - telnet-ssl
-  when: ansible_facts["distribution"] == "Ubuntu"
+    commonPackages: "{{ basicPackages }}"
 
-- name: Collect all packages
+- name: Set common packages to basic + ubuntu
   tags: apt
   set_fact:
     commonPackages: "{{ basicPackages + ( ubuntuPackages | default([])) }}"
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install basic tools
   tags: apt
