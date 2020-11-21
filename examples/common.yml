@@ -1,0 +1,7 @@
+# As "all" hosts are included, there is no need for a specific inventory configuration.
+- name: Common
+  hosts: all
+  become: yes
+  roles:
+    - common
+
