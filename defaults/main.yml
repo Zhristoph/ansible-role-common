@@ -18,5 +18,11 @@ basicPackages:
  - neovim
  - tcpdump
 
+commonDirUrwx:
+ - /root/bin
+
+commonDirUrwxGrxOrx:
+ - /srv
+
 ubuntuPackages:
  - telnet-ssl

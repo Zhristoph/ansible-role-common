@@ -50,20 +50,25 @@
     - en_US.UTF-8
     - de_DE.UTF-8
 
-- name: Create directories
+- name: Create directories readable for user only
   file:
     dest: "{{ item }}"
     state: directory
-    mode: "u=rwx,g=rx,u=rx"
-  loop:
-   - /data
-   - /root/bin
+    mode: "u=rwx,g-rwx,o-rwx"
+  loop: "{{ commonDirUrwx }}"
+
+- name: Create directories for group/other readable
+  file:
+    dest: "{{ item }}"
+    state: directory
+    mode: "u=rwx,g=rx,o=rx"
+  loop: "{{ commonDirUrwxGrxOrx }}"
 
 - name: Deploy scripts for root
   template:
     src: "{{ item }}"
     dest: "/root/bin/{{ item }}"
-    mode: 0700
+    mode: "u=rwx,g-rwx,o-rwx"
     owner: root
     group: root
   loop:
